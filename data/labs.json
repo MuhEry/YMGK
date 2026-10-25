@@ -1,0 +1,473 @@
+{
+  "machine": "KR KZM 3 Speedy",
+  "date": "25.10.2026",
+  "labs": [
+    {
+      "id": 1,
+      "title": "Safety Architecture",
+      "output": "Safety Function Map",
+      "operations": [
+        {
+          "op": "head",
+          "args": [
+            1,
+            "Safety Architecture",
+            "Safety Function Map"
+          ]
+        },
+        {
+          "op": "box",
+          "args": [
+            "<b>Kapsam ve veri ayrımı:</b> Kaynak PDF’nin LAB 1-4 bölümleri (s. 2-5) uyarlanmıştır. [1] üretici verisidir; emniyet rölesi/PLC, STO, kapak kilidi, ışık perdesi, PLC modeli ve uzak erişim donanımı açıklanmamıştır. Aşağıdaki emniyet zinciri <b>öneridir</b>; mevcut makinenin doğrulanmış devresi değildir."
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "<b>Makine bağlamı [1]:</b> Ahşap kapı, kapak ve mobilya kenarlarında ham/astar zımparası; bir disk fırça ve iki orbital motor. Konveyör ve zımpara hızları dokunmatik ekrandan ayarlanır; ünite ve üst baskı tekeri konumları manueldir. İlerleme: 1-10 m/dk; toz emiş ihtiyacı: 1000 m³/sa."
+          ]
+        },
+        {
+          "op": "box",
+          "args": [
+            "<b>Normal yol (kavramsal):</b> Operatör/HMI → standart kontrol → konveyör + orbital motorlar + disk fırça.<br/><b>Önerilen ayrı emniyet yolu [EMN]:</b> Acil durdurma + erişim koruyucusu → emniyet rölesi/PLC → doğrulanmış durdurma ve enerji kesme → tehlikeli hareketin bitmesi. [EMN] tüm giriş-mantık-çıkış zinciridir; yalnız PLC değildir."
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "<b>1. Tehlike ve zarar</b><br/>Dönen zımparaya kapılma/aşınma; konveyör-baskı tekerinde sıkışma ve ezilme; parçanın fırlaması. Ahşap tozu solunum ve yangın tehlikesi doğurabilir. Bunlar işlemden çıkarılan tehlikelerdir."
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "<b>2. Emniyet fonksiyonu</b><br/>SF-01: Koruyucu açıldığında tehlikeli hareketi erişimden önce durdurmak ve yeniden başlamayı engellemek. SF-02: Acil durdurma talebinde güvenli duruş. Toz emiş kaybına ilişkin duruş ihtiyacı ayrıca değerlendirilir."
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "<b>3. Emniyetle ilgili kontrol sistemi</b><br/>Şemada [EMN] olarak işaretlenen algılayıcı, emniyet mantığı ve son anahtarlama elemanlarıdır. Gerçek bileşenler elektrik şeması ve saha incelemesiyle belirlenir."
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "<b>4. Normal PLC / Safety PLC farkı</b><br/>Standart PLC üretimi yönetir. Emniyet kontrolörü, uygun mimari ve doğrulamayla arızada risk azaltmayı sağlar. HMI’deki normal durdurma komutu emniyet fonksiyonunun yerine geçmez."
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "<b>5. PLr / SIL neden gerekli?</b><br/>Fonksiyonun gerekli risk azaltma güvenilirliğini tanımlar. ISO 13849-1 veya IEC 62061 yaklaşımıyla fonksiyon bazında belirlenir [2]. Maruziyet ve kaçınma verileri yoktur; bu föyde PLr/SIL sayısı atanmaz."
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "<b>6. Güvenli durum</b><br/>Tehlikeli dönüş ve besleme durmuş; parça güvenle tutulmuş; beklenmedik başlatma engellenmiş durumdur. STO tek başına anında duruş sağlamaz [3]. Artık dönüş için duruş süresi/erişim doğrulanır; bakımda enerji izolasyonu yapılır."
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "<b>7. Dijital bağımlılıklar</b><br/>Varsa emniyet yazılımı, firmware, I/O eşlemesi, sürücü emniyet parametreleri ve emniyet haberleşmesi. Ortak besleme/ortak hata ve reset yolu da incelenir; internet erişimi emniyet için zorunlu olmamalıdır."
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "<b>8. Siber müdahale noktası</b><br/>Varsa servis hesabı, mühendislik portu veya USB üzerinden kontrol/parametre değişikliği yapılabilir. Emniyetin bozulması ancak emniyet zincirine etki yolu varsa mümkündür; bu yol doğrulanmadan kesin bulgu yazılmaz."
+          ]
+        },
+        {
+          "op": "end",
+          "args": [
+            1,
+            "EP 03 Safety Functions"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "IEC 62443 Mini Workshop",
+      "output": "Zone / Conduit Diagram",
+      "operations": [
+        {
+          "op": "head",
+          "args": [
+            2,
+            "IEC 62443 Mini Workshop",
+            "Zone / Conduit Diagram"
+          ]
+        },
+        {
+          "op": "box",
+          "args": [
+            "<b>Varsayım sınırı:</b> Üreticide dokunmatik ekran doğrulanır [1]. PLC/sürücü türleri ve tüm ağ bağlantıları belirsizdir. Föydeki port 80, admin/admin, Wi-Fi, USB, bulut ve internete açık bakım örnekleri bu makinede tespit edilmiş zafiyetler değildir. Aşağıda yalnız eğitim senaryosu ve hedef gereksinim olarak ele alınır."
+          ]
+        },
+        {
+          "op": "label",
+          "args": [
+            "Görev A - 1. Varlıkların önerilen bölgeleri [4]"
+          ]
+        },
+        {
+          "op": "table",
+          "args": [
+            [
+              [
+                "Bölge",
+                "Varlıklar / gerekçe"
+              ],
+              [
+                "Z1 - Makine kontrolü",
+                "HMI, varsa üretim PLC’si ve ağ bağlantılı sürücüler: üretim komutları ve yerel proses verileri."
+              ],
+              [
+                "Z2 - Emniyet",
+                "Önerilen emniyet rölesi/PLC, koruyucu girişleri ve güvenli çıkışlar: kritik koruma işlevleri. Bağımsızlık doğrulanacak."
+              ],
+              [
+                "Z3 - Endüstriyel DMZ",
+                "Varsa uzak bakım ağ geçidi, jump server ve oturum kayıt sistemi: dış erişim burada sonlandırılır."
+              ],
+              [
+                "Z4 - İşletme / bakım",
+                "Yetkili bakım bilgisayarı, kimlik ve yama hizmetleri. Servis hesabı bir cihaz değil; bu erişimin kimlik varlığıdır."
+              ],
+              [
+                "Z5 - Harici ağ",
+                "Tedarikçi/servis ve varsa bulut. Wi-Fi varsa ayrı kısıtlı erişim bölgesi; USB varsa kontrollü yerel bakım arayüzü."
+              ]
+            ],
+            [
+              120,
+              387
+            ]
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "<b>2. Açık bakım modülü nerede?</b> Varsayımsal internete açık modül Z1/Z2’de doğrudan erişilebilir kalamaz. Dış erişim Z3’te denetlenmeli; modülün konumu ve bağlantıları envanterle doğrulanmalıdır."
+          ]
+        },
+        {
+          "op": "label",
+          "args": [
+            "3. Bölgeler arası geçişler ve kontroller"
+          ]
+        },
+        {
+          "op": "table",
+          "args": [
+            [
+              [
+                "Conduit",
+                "Kontrol edilecek koşul"
+              ],
+              [
+                "Z5 → Z3",
+                "VPN + MFA; kişisel kimlik, süreli onay ve kayıt. Doğrudan PLC/HMI port yönlendirmesi yasak."
+              ],
+              [
+                "Z4 → Z3 → Z1",
+                "Jump server; hedef/protokol/işlem izin listesi, en az yetki, yerel bakım izni; varsayılan ret."
+              ],
+              [
+                "Z1 ↔ Z2",
+                "Yalnız gerekçelendirilmiş durum bilgisi ve doğrulanmış arayüz; standart kontrol emniyeti geçersiz kılamaz. Uzak emniyet yazma/reset yolu olmamalı."
+              ],
+              [
+                "Z1 → Z3 → bulut",
+                "Yalnız ihtiyaç varsa dışa telemetri; buluttan kumanda yok. Hedef, veri ve bağlantı yönü sınırlandırılır."
+              ],
+              [
+                "USB / Wi-Fi → bakım",
+                "Varsa USB yetkilendirme ve dosya denetimi; Wi-Fi ayrı ağ, kişisel kimlik ve kontrollü geçiş."
+              ]
+            ],
+            [
+              120,
+              387
+            ]
+          ]
+        },
+        {
+          "op": "label",
+          "args": [
+            "Görev B - Uzak erişim kararı"
+          ]
+        },
+        {
+          "op": "table",
+          "args": [
+            [
+              [
+                "Karar",
+                "Seçim ve nedeni"
+              ],
+              [
+                "Aracı / Tünel",
+                "Jump server / VPN: kontrollü ara nokta ve şifreli bağlantı."
+              ],
+              [
+                "Kimlik / Hesap",
+                "MFA / kişisel hesap: ele geçirilen parolanın etkisini azaltır, sorumluluğu izlenebilir kılar."
+              ],
+              [
+                "Kayıt / Zamanlama",
+                "Tam oturum kaydı / varsayılan kapalı: değişiklik kanıtı; yalnız onaylı bakım penceresinde erişim."
+              ]
+            ],
+            [
+              120,
+              387
+            ]
+          ]
+        },
+        {
+          "op": "end",
+          "args": [
+            2,
+            "EP 05 Zone & Conduit"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Threat & Risk + Risk Matrix",
+      "output": "Risk Register",
+      "operations": [
+        {
+          "op": "head",
+          "args": [
+            3,
+            "Threat & Risk + Risk Matrix",
+            "Risk Register"
+          ]
+        },
+        {
+          "op": "box",
+          "args": [
+            "<b>Risk kaydı varsayımı:</b> Aşağıdaki üç senaryo saha bulgusu değildir. Bağlantı ve zafiyetler yalnız varsa geçerlidir. Puanlar kontrol öncesi eğitim tahminidir: L = gerçekleşme olasılığı, S = fiziksel şiddet, E = maruziyet; her biri 1 (düşük), 2 (orta), 3 (yüksek). S=3 ciddi/kalıcı yaralanma olasılığıdır. Bu puanlama PLr/SIL tayini değildir."
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "<b>Eşikler (kaynak föyle aynı):</b> 18-27 Kritik; 9-17 Yüksek; 4-8 Orta; 1-3 Düşük. <b>S=3 olan tüm senaryolar ayrıca öne alınır.</b>"
+          ]
+        },
+        {
+          "op": "table",
+          "args": [
+            [
+              [
+                "Senaryo: kim → kapı → eylem → zincir → fiziksel sonuç",
+                "L",
+                "S",
+                "E",
+                "Skor / öncelik"
+              ],
+              [
+                "R1 - Dış saldırgan → varsayımsal açık bakım modülü ve ortak hesap → kontrol parametresi/program değişikliği → yerel izin ve bağımsız yeniden başlatma engeli de etkisizse konveyör/fırça beklenmedik çalışır → müdahale eden kişinin eli sıkışır veya dönen takıma kapılır.",
+                "3",
+                "3",
+                "2",
+                "18<br/>Kritik"
+              ],
+              [
+                "R2 - Zararlı USB taşıyan bakım cihazı → varsa denetimsiz servis USB’si → sürücü/PLC ayarı değişir → izin verilen hız sınırları aşılır ve parça tutma/koruma yetersiz kalır → parça fırlar, operatörde ciddi yüz/göz yaralanması oluşabilir.",
+                "2",
+                "3",
+                "2",
+                "12<br/>Yüksek"
+              ],
+              [
+                "R3 - Yetkisiz/ele geçirilmiş mühendislik hesabı → varsa emniyet yapılandırma arayüzü → koruyucu girişi bypass edilir → kapak açıkken artık dönüşe erişim mümkün olur → elde ciddi aşınma/kapılma yaralanması. Nadir bakım erişimi varsayılmıştır.",
+                "1",
+                "3",
+                "1",
+                "3<br/>Düşük*"
+              ]
+            ],
+            [
+              339,
+              25,
+              25,
+              25,
+              93
+            ]
+          ]
+        },
+        {
+          "op": "label",
+          "args": [
+            "Puanların dayanağı ve belirsizlik"
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "R1’de L=3, yalnız doğrudan açık ve zayıf kimlikli erişim varsayımına dayanır. R2’de L=2, dönemsel bakım dosyası aktarımına dayanır. R1/R2 için E=2 aralıklı operatör maruziyetidir. R3’te L=1 ve E=1, nadir ve sınırlı bakım varsayımıdır. S=3, her üçünde kalıcı fiziksel zarar olasılığı nedeniyledir. Gerçek kullanım gözlemleriyle yeniden puanlanır."
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "<b>1. En yüksek öncelik:</b> R1; varsayılan açık erişim ile beklenmedik hareket zinciri birleştiğinden skor 18’dir. Bağımsız emniyet doğrulanırsa bu zincirin kesildiği ve kalan risk ayrıca kaydedilir."
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "<b>2. S=3 fakat düşük skorlu senaryo:</b> R3, 1 × 3 × 1 = 3. Sayısal sınıfı Düşük kalır; <b>“S=3 - zorunlu öncelikli inceleme”</b> etiketiyle üst inceleme listesine alınır. Düşük skor kabul kararı sayılmaz."
+          ]
+        },
+        {
+          "op": "label",
+          "args": [
+            "Aksiyon, sorumlu ve kapanış kanıtı"
+          ]
+        },
+        {
+          "op": "table",
+          "args": [
+            [
+              [
+                "Kayıt / sorumlu",
+                "Önlem ve kabul kanıtı"
+              ],
+              [
+                "R1 - OT sorumlusu + üretici",
+                "Açık erişimi kaldır; süreli onay/MFA uygula. Bağlantı taraması, erişim logu ve yetkisiz komutun güvenli durumu bozamama testi."
+              ],
+              [
+                "R2 - Bakım + otomasyon",
+                "Onaylı bakım medyası, parametre sınırları ve değişiklik kontrolü. Sürüm/parametre karşılaştırması; hız ve parça tutma doğrulaması."
+              ],
+              [
+                "R3 - Emniyet yetkilisi",
+                "Emniyet değişikliklerini ayrı yetkilendir; bypass ve yeniden başlatmayı doğrula. İmzalı konfigürasyon kaydı ve fonksiyon test raporu."
+              ]
+            ],
+            [
+              140,
+              367
+            ]
+          ]
+        },
+        {
+          "op": "end",
+          "args": [
+            3,
+            "EP 04 Risk Assessment"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Secure Remote Access",
+      "output": "Secure Architecture",
+      "operations": [
+        {
+          "op": "head",
+          "args": [
+            4,
+            "Secure Remote Access",
+            "Secure Architecture"
+          ]
+        },
+        {
+          "op": "box",
+          "args": [
+            "<b>Mevcut durumun sınırı:</b> İnternet bağlantısı ve uzak bakım modülü üretici sayfasında belirtilmez [1]. Gerçek ağ şeması bilinmiyor. Bu nedenle “mevcut” alanı gerçek bulgu ve föyün eğitim varsayımı olarak ayrı doldurulmuştur; hedef, karşılanması gereken gereksinimleri gösterir."
+          ]
+        },
+        {
+          "op": "label",
+          "args": [
+            "Görev A - Mevcut → hedef"
+          ]
+        },
+        {
+          "op": "table",
+          "args": [
+            [
+              [
+                "MEVCUT / bilinen ve varsayılan",
+                "HEDEF / beş ilke"
+              ],
+              [
+                "Doğrulanan: Hız ayarı için dokunmatik ekran vardır. PLC ağı, emniyet kontrolü, modem, kullanıcı hesapları ve kayıtlar bilinmiyor.\n\nEğitim varsayımı: İnternet → doğrudan bakım modülü → makine kontrolü. Emniyet ağına geçiş olup olmadığı belirsiz.",
+                "1. Kontrollü ara nokta: Dış bakım yalnız DMZ/jump server üzerinden; PLC/HMI’ye doğrudan internet erişimi yok.\n\n2. Güvenli kimlik ve kanal: VPN + MFA + kişisel hesap, en az yetki.\n\n3. Süreli yerel izin: Varsayılan kapalı; iş emri, makine başında onay ve otomatik süre sonu.\n\n4. İzlenebilirlik: Oturum ve değişiklik kaydı, zaman eşleme, kayıt bütünlüğü ve erişim denetimi.\n\n5. Emniyet bağımsızlığı: Uzak komut emniyet fonksiyonunu bypass edemez; uzaktan reset/yeniden başlatma engellenir."
+              ]
+            ],
+            [
+              219,
+              288
+            ]
+          ]
+        },
+        {
+          "op": "box",
+          "args": [
+            "<b>Hedef akış (kavramsal):</b><br/>Yetkili servis → VPN + MFA → Z3 DMZ / jump server → izinli bakım geçişi → Z1 kontrol.<br/>Yerel yetkili: iş emri + süreli bakım onayı. Kayıt: oturum + değişiklik izi.<br/><b>Z2 emniyet:</b> Uzak bakım yolundan emniyet yazma/bypass/reset yetkisi yok; koruyucu talebi üretim kontrolünden bağımsız uygulanır."
+          ]
+        },
+        {
+          "op": "label",
+          "args": [
+            "Görev B - Functional safety köprüsü"
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "<b>1. Saldırgan içeri girerse emniyet etkilenir mi?</b><br/>Mevcut makine için şema ve test olmadan yanıt verilemez. Hedefte, standart kontrolün ele geçirilmesi emniyet duruşunu ve yeniden başlatma engelini geçersiz kılamamalıdır. Ortak besleme, ağ, sürücü ve mühendislik erişimleri ortak nedenli etki bakımından incelenmelidir. Siber erişim önlemleri tek başına bu bağımsızlığın kanıtı değildir."
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "<b>2. Gereksinim (çözümden bağımsız):</b><br/>KR KZM 3 Speedy’de tehlikeli hareketi durduran koruyucu/emniyet zinciri, uzak bakım kanalının veya standart kontrolün ele geçirilmesi, hatalı komutu ya da iletişim kaybı halinde gerekli duruş ve yeniden başlatmayı önleme işlevini sürdürmelidir. Uzak kullanıcı bu zinciri devre dışı bırakamamalı, emniyet parametrelerini değiştirememeli veya reset verememelidir. Erişim, risk değerlendirmesinde belirlenen duruş/erişim süresi koşullarını sağlamalıdır. Işık perdesi varlığı doğrulanmadığından gereksinim gerçek koruyucu tipine göre uyarlanır."
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "<b>Doğrulama kanıtı:</b> Gerçek bileşen envanteri ve elektrik/ağ şeması; risk değerlendirmesi; ölçülmüş duruş süresi; koruyucu, haberleşme kaybı, enerji geri gelmesi ve yetkisiz uzaktan komut testleri. Reset hareket başlatmamalı; tekrar çalışma ayrı yerel başlatma gerektirmelidir [3].",
+            "small"
+          ]
+        },
+        {
+          "op": "label",
+          "args": [
+            "Kaynaklar ve kullanım notu"
+          ]
+        },
+        {
+          "op": "p",
+          "args": [
+            "[1] Karabudak Makine, KR KZM 3 Speedy ürün sayfası (erişim: 25.10.2026):<br/><link href=\"https://karabudakmakine.com/kr-kzm-3-speedy-kenar-zimparalama-makinesi/\" color=\"#007c83\">karabudakmakine.com / KR KZM 3 Speedy</link><br/>[2] Pilz, Standards Functional Safety and Risk Assessment (1003920-EN-06).<br/>[3] Rockwell Automation, Safety-AT196A-EN-P, Nisan 2022, s. 5 (STO/duruş ve tekrar başlatma ilkesi).<br/>[4] ISA, ISA/IEC 62443 Series of Standards; ISASecure/ISAGCA, IIoT System Implementation and Certification, Ek A.2.<br/>Şablon: Kullanıcının sağladığı laboratuvar PDF’si, LAB 1-4. Eğitim çalışmasıdır; sahada ölçüm veya uygunluk belgesi yerine geçmez.",
+            "small"
+          ]
+        },
+        {
+          "op": "end",
+          "args": [
+            4,
+            "EP 02 + EP 06"
+          ]
+        }
+      ]
+    }
+  ]
+}
